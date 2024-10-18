@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chatop.api.model.Rental;
-import com.chatop.api.model.RequestNotification;
+import com.chatop.api.model.ApiResponse;
 import com.chatop.api.repository.RentalRepository;
 
 import lombok.Data;
@@ -44,15 +44,12 @@ public class RentalService {
 	 * @param rental
 	 * @return notification
 	 */
-	public RequestNotification createRental(Rental rental) {
+	public ApiResponse createRental(Rental rental) {
 		rentalRepository.save(rental);
-
-		RequestNotification notification = new RequestNotification();
-		notification.setMessage("Rental created !");
-		return notification;
+		return new ApiResponse("Rental created !");
 	}
 
-	public RequestNotification updateRental(Long id, Rental rental) {
+	public ApiResponse updateRental(Long id, Rental rental) {
 		Optional<Rental> oldRental = rentalRepository.findById(id);
 
 		if (oldRental.isPresent()) {
@@ -63,9 +60,7 @@ public class RentalService {
 			updatedRental.setDescription(oldRental.get().getDescription());
 			updatedRental.setUpdatedAt(LocalDateTime.now());
 		}
-		
-		RequestNotification notification = new RequestNotification();
-		notification.setMessage("Rental updated !");
-		return notification;
+
+		return new ApiResponse("Rental updated !");
 	}
 }

@@ -1,13 +1,16 @@
 package com.chatop.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chatop.api.model.Message;
-import com.chatop.api.model.RequestNotification;
+import com.chatop.api.model.ApiResponse;
+import com.chatop.api.model.DTO.MessageDTO;
 import com.chatop.api.service.MessageService;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class MessageController {
@@ -22,7 +25,7 @@ public class MessageController {
 	 * @return notification
 	 */
 	@PostMapping("/messages")
-	public RequestNotification createMessage(@RequestBody Message message) {
-		return messageService.createMessage(message);
+	public ResponseEntity<ApiResponse> createMessage(@Valid @RequestBody MessageDTO messageDTO) {
+		return messageService.createMessage(messageDTO);
 	}
 }
