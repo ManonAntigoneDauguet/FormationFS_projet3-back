@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chatop.api.model.Rental;
-import com.chatop.api.model.RequestNotification;
+import com.chatop.api.model.ApiResponse;
 import com.chatop.api.service.RentalService;
 
 @RestController
@@ -48,7 +48,7 @@ public class RentalController {
 	 * @return
 	 */
 	@PostMapping("/rentals")
-	public RequestNotification createRental(@RequestBody Rental rental) {
+	public ApiResponse createRental(@RequestBody Rental rental) {
 		return rentalService.createRental(rental);
 	}
 }
