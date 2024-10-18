@@ -12,7 +12,7 @@ public class MessageDTO {
 	@Positive(message = "rental_id must be a positive number")
 	private Long rental_id;
 	
-	@NotNull(message = "userl_id is required")
+	@NotNull(message = "user_id is required")
 	@Positive(message = "rental_id must be a positive number")
 	private Long user_id;
 

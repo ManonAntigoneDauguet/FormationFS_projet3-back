@@ -1,4 +1,4 @@
-package com.chatop.api.model;
+package com.chatop.api.model.apiRequest;
 
 import lombok.Data;
 

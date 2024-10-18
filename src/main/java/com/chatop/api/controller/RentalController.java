@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chatop.api.model.Rental;
-import com.chatop.api.model.ApiResponse;
+import com.chatop.api.model.apiResponse.ApiMessageResponse;
+import com.chatop.api.model.database.Rental;
 import com.chatop.api.service.RentalService;
 
 @RestController
@@ -30,12 +30,12 @@ public class RentalController {
 	}
 
 	/**
-	 * Returns the rental's informations
+	 * Returns the rental's information
 	 * 
 	 * @param id
 	 * @return rental
 	 */
-	@GetMapping("/rentals/:id")
+	@GetMapping("/rentals/{id}")
 	public Optional<Rental> getRentalById(@PathVariable("id") final Long id) {
 		Optional<Rental> rental = rentalService.getRentalById(id);
 		return rental.isPresent() ? rental : null;
@@ -48,7 +48,7 @@ public class RentalController {
 	 * @return
 	 */
 	@PostMapping("/rentals")
-	public ApiResponse createRental(@RequestBody Rental rental) {
+	public ApiMessageResponse createRental(@RequestBody Rental rental) {
 		return rentalService.createRental(rental);
 	}
 }
