@@ -2,16 +2,15 @@ package com.chatop.api.service.controller;
 
 import java.util.Optional;
 
+import com.chatop.api.service.DTO.RentalDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
 import com.chatop.api.business.entity.Rental;
-import com.chatop.api.service.service.RentalService;
+import com.chatop.api.business.service.RentalService;
 
 @RestController
 public class RentalController {
@@ -44,11 +43,11 @@ public class RentalController {
 	/**
 	 * Creates a rental
 	 * 
-	 * @param rental
-	 * @return
+	 * @param rentalDTO as the rental to create
+	 * @return notification
 	 */
 	@PostMapping("/rentals")
-	public ApiMessageResponse createRental(@RequestBody Rental rental) {
-		return rentalService.createRental(rental);
+	public ResponseEntity<ApiMessageResponse> createRental(@Valid @ModelAttribute RentalDTO rentalDTO) {
+		return rentalService.createRental(rentalDTO);
 	}
 }

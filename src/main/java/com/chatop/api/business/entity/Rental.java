@@ -26,7 +26,8 @@ public class Rental {
 	private Double price;
 	
 	private String picture;
-	
+
+	@Column(length = 2000)
 	private String description;
 	
 	@Column(name="owner_id")

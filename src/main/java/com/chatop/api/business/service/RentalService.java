@@ -1,9 +1,13 @@
-package com.chatop.api.service.service;
+package com.chatop.api.business.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.chatop.api.business.mapper.RentalMapper;
+import com.chatop.api.service.DTO.RentalDTO;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
@@ -19,6 +23,9 @@ public class RentalService {
 	@Autowired
 	private RentalRepository rentalRepository;
 
+	@Autowired
+	private RentalMapper rentalMapper;
+
 	/**
 	 * Finds all the rentals
 	 * 
@@ -31,22 +38,24 @@ public class RentalService {
 	/**
 	 * Finds the rental by id
 	 * 
-	 * @param id
+	 * @param id as the rental id
 	 * @return rental
 	 */
 	public Optional<Rental> getRentalById(Long id) {
+
 		return rentalRepository.findById(id);
 	}
 
 	/**
 	 * Saves the rental
 	 * 
-	 * @param rental
+	 * @param rentalDTO as the rental to create
 	 * @return notification
 	 */
-	public ApiMessageResponse createRental(Rental rental) {
+	public ResponseEntity<ApiMessageResponse> createRental(RentalDTO rentalDTO) {
+		Rental rental = rentalMapper.convertToEntity(rentalDTO);
 		rentalRepository.save(rental);
-		return new ApiMessageResponse("Rental created !");
+		return ResponseEntity.ok(new ApiMessageResponse("Rental created !"));
 	}
 
 	public ApiMessageResponse updateRental(Long id, Rental rental) {

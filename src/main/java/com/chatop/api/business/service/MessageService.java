@@ -1,4 +1,4 @@
-package com.chatop.api.service.service;
+package com.chatop.api.business.service;
 
 import com.chatop.api.business.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;

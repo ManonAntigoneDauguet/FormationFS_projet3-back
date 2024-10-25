@@ -1,4 +1,4 @@
-package com.chatop.api.service.service;
+package com.chatop.api.business.service;
 
 import java.time.LocalDateTime;
 
@@ -50,7 +50,4 @@ public class UserService {
 //		return ...
 //	}
 
-	public Iterable<User> getUsers() { // Remove more later
-		return userRepository.findAll();
-	}
 }

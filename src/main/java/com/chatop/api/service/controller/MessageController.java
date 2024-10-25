@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chatop.api.service.DTO.MessageDTO;
 import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
-import com.chatop.api.service.service.MessageService;
+import com.chatop.api.business.service.MessageService;
 
 import jakarta.validation.Valid;
 

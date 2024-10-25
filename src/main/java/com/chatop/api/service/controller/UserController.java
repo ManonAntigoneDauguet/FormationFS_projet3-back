@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chatop.api.business.entity.User;
-import com.chatop.api.service.service.UserService;
+import com.chatop.api.business.service.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
 

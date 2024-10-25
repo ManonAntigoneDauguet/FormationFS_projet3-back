@@ -17,7 +17,7 @@ import com.chatop.api.service.DTO.apiResponse.ApiResponse;
 import com.chatop.api.service.DTO.apiResponse.ApiTokenResponse;
 import com.chatop.api.business.entity.User;
 import com.chatop.api.service.service.JWTService;
-import com.chatop.api.service.service.UserService;
+import com.chatop.api.business.service.UserService;
 
 @RestController
 public class AuthController {
