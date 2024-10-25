@@ -1,4 +1,4 @@
-package com.chatop.api.model;
+package com.chatop.api.model.database;
 
 import java.time.LocalDateTime;
 
@@ -12,18 +12,20 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="users")
-public class User {
+@Table(name="messages")
+public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String email;
+	@Column(name="rental_id")
+	private Long rentalId;
 	
-	private String name;
+	@Column(name="user_id")
+	private Long userId;
 	
-	private String password;
+	private String message;
 	
 	@Column(name="created_at")
 	private LocalDateTime createdAt;

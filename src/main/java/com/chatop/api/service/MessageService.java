@@ -1,14 +1,13 @@
 package com.chatop.api.service;
 
-import java.time.LocalDateTime;
-
+import com.chatop.api.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.chatop.api.model.ApiResponse;
-import com.chatop.api.model.Message;
 import com.chatop.api.model.DTO.MessageDTO;
+import com.chatop.api.model.apiResponse.ApiMessageResponse;
+import com.chatop.api.model.database.Message;
 import com.chatop.api.repository.MessageRepository;
 
 import lombok.Data;
@@ -20,21 +19,18 @@ public class MessageService {
 	@Autowired
 	private MessageRepository messageRepository;
 
+	@Autowired
+	private MessageMapper messageMapper;
+
 	/**
 	 * Saves the message
 	 * 
-	 * @param messageDTO
+	 * @param messageDTO as the message to send
 	 * @return notification
 	 */
-	public ResponseEntity<ApiResponse> createMessage(MessageDTO messageDTO) {
-		Message message = new Message();
-		message.setMessage(messageDTO.getMessage());
-		message.setRentalId(messageDTO.getRental_id());
-		message.setUserlId(messageDTO.getUser_id());
-		message.setCreatedAt(LocalDateTime.now());
-		message.setUpdatedAt(LocalDateTime.now());
-
+	public ResponseEntity<ApiMessageResponse> createMessage(MessageDTO messageDTO) {
+		Message message = messageMapper.convertToEntity(messageDTO);
 		messageRepository.save(message);
-		return ResponseEntity.ok(new ApiResponse("Message send with success"));
+		return ResponseEntity.ok(new ApiMessageResponse("Message send with success"));
 	}
 }

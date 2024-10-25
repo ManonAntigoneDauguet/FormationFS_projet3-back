@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chatop.api.model.Rental;
-import com.chatop.api.model.ApiResponse;
+import com.chatop.api.model.apiResponse.ApiMessageResponse;
+import com.chatop.api.model.database.Rental;
 import com.chatop.api.repository.RentalRepository;
 
 import lombok.Data;
@@ -44,12 +44,12 @@ public class RentalService {
 	 * @param rental
 	 * @return notification
 	 */
-	public ApiResponse createRental(Rental rental) {
+	public ApiMessageResponse createRental(Rental rental) {
 		rentalRepository.save(rental);
-		return new ApiResponse("Rental created !");
+		return new ApiMessageResponse("Rental created !");
 	}
 
-	public ApiResponse updateRental(Long id, Rental rental) {
+	public ApiMessageResponse updateRental(Long id, Rental rental) {
 		Optional<Rental> oldRental = rentalRepository.findById(id);
 
 		if (oldRental.isPresent()) {
@@ -61,6 +61,6 @@ public class RentalService {
 			updatedRental.setUpdatedAt(LocalDateTime.now());
 		}
 
-		return new ApiResponse("Rental updated !");
+		return new ApiMessageResponse("Rental updated !");
 	}
 }

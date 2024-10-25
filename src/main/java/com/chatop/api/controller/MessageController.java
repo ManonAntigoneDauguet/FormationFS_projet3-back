@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chatop.api.model.ApiResponse;
 import com.chatop.api.model.DTO.MessageDTO;
+import com.chatop.api.model.apiResponse.ApiMessageResponse;
 import com.chatop.api.service.MessageService;
 
 import jakarta.validation.Valid;
@@ -21,11 +21,11 @@ public class MessageController {
 	/**
 	 * Creates a message
 	 * 
-	 * @param message
+	 * @param messageDTO as the message to send
 	 * @return notification
 	 */
 	@PostMapping("/messages")
-	public ResponseEntity<ApiResponse> createMessage(@Valid @RequestBody MessageDTO messageDTO) {
+	public ResponseEntity<ApiMessageResponse> createMessage(@Valid @RequestBody MessageDTO messageDTO) {
 		return messageService.createMessage(messageDTO);
 	}
 }
