@@ -12,6 +12,8 @@ import com.chatop.api.service.repository.MessageRepository;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Service
 public class MessageService {
@@ -30,6 +32,9 @@ public class MessageService {
 	 */
 	public ResponseEntity<ApiMessageResponse> createMessage(MessageDTO messageDTO) {
 		Message message = messageMapper.convertToEntity(messageDTO);
+		message.setCreatedAt(LocalDateTime.now());
+		message.setUpdatedAt(LocalDateTime.now());
+
 		messageRepository.save(message);
 		return ResponseEntity.ok(new ApiMessageResponse("Message send with success"));
 	}

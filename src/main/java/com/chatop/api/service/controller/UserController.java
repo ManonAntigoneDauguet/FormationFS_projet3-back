@@ -15,23 +15,23 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	/**
-	 * Returns the user's information
-	 * 
-	 * @param id as the user id
-	 * @return user's information
-	 */
-	@GetMapping("/user/{id}")
-	public ResponseEntity<Object> getUserById(@PathVariable("id") final Long id) {
+    /**
+     * Returns the user's information
+     *
+     * @param id as the user id
+     * @return user's information
+     */
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Object> getUserById(@PathVariable("id") final Long id) {
         try {
             User user = userService.getUserById(id);
-            return  ResponseEntity.ok(user);
+            return ResponseEntity.ok(user);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("User not found");
+                    .body("User not found");
         }
-	}
+    }
 }

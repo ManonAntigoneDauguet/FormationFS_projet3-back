@@ -22,8 +22,6 @@ public class MessageMapper {
         message.setMessage(messageDTO.getMessage());
         message.setRentalId(messageDTO.getRental_id());
         message.setUserId(messageDTO.getUser_id());
-        message.setCreatedAt(LocalDateTime.now());
-        message.setUpdatedAt(LocalDateTime.now());
 
         return message;
     }

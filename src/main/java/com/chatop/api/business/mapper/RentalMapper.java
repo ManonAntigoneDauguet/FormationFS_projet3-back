@@ -24,8 +24,6 @@ public class RentalMapper {
         rental.setPrice(rentalDTO.getPrice());
         // ADD PICTURE
         rental.setDescription(rentalDTO.getDescription());
-        rental.setCreatedAt(LocalDateTime.now());
-        rental.setUpdatedAt(LocalDateTime.now());
 
         return rental;
     }

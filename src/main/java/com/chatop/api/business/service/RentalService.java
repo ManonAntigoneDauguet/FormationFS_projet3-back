@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.chatop.api.business.mapper.RentalMapper;
 import com.chatop.api.service.DTO.RentalDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,9 +42,8 @@ public class RentalService {
 	 * @param id as the rental id
 	 * @return rental
 	 */
-	public Optional<Rental> getRentalById(Long id) {
-
-		return rentalRepository.findById(id);
+	public Rental getRentalById(Long id) {
+		return rentalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Rental not found"));
 	}
 
 	/**
@@ -54,22 +54,27 @@ public class RentalService {
 	 */
 	public ResponseEntity<ApiMessageResponse> createRental(RentalDTO rentalDTO) {
 		Rental rental = rentalMapper.convertToEntity(rentalDTO);
+		rental.setCreatedAt(LocalDateTime.now());
+		rental.setUpdatedAt(LocalDateTime.now());
+
 		rentalRepository.save(rental);
 		return ResponseEntity.ok(new ApiMessageResponse("Rental created !"));
 	}
 
-	public ApiMessageResponse updateRental(Long id, Rental rental) {
-		Optional<Rental> oldRental = rentalRepository.findById(id);
+	/**
+	 *
+	 * @param oldRental as the found rental
+	 * @param updatedData as the RentalDTO with the new information
+	 * @return notification
+	 */
+	public ResponseEntity<ApiMessageResponse> updateRental(Rental oldRental, RentalDTO updatedData) {
+		oldRental.setName(updatedData.getName());
+		oldRental.setSurface(updatedData.getSurface());
+		oldRental.setPrice(updatedData.getPrice());
+		oldRental.setDescription(updatedData.getDescription());
+		oldRental.setUpdatedAt(LocalDateTime.now());
 
-		if (oldRental.isPresent()) {
-			Rental updatedRental = oldRental.get();
-			updatedRental.setName(oldRental.get().getName());
-			updatedRental.setSurface(oldRental.get().getSurface());
-			updatedRental.setPrice(oldRental.get().getPrice());
-			updatedRental.setDescription(oldRental.get().getDescription());
-			updatedRental.setUpdatedAt(LocalDateTime.now());
-		}
-
-		return new ApiMessageResponse("Rental updated !");
+		rentalRepository.save(oldRental);
+		return ResponseEntity.ok(new ApiMessageResponse("Rental updated !"));
 	}
 }
