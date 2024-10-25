@@ -4,8 +4,6 @@ import com.chatop.api.service.DTO.MessageDTO;
 import com.chatop.api.business.entity.Message;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Component
 public class MessageMapper {
 

@@ -2,6 +2,8 @@ package com.chatop.api.business.service;
 
 import java.time.LocalDateTime;
 
+import com.chatop.api.business.mapper.UserMapper;
+import com.chatop.api.service.DTO.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,17 +21,20 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private UserMapper userMapper;
+
 	/**
 	 * Saves the new user
 	 * 
-	 * @param user as the new user to save
-	 * @return // Must return a simple response
+	 * @param userDTO as the new user to save
 	 */
-	public User register(User user) {
+	public void register(UserDTO userDTO) {
+		User user = userMapper.convertToEntity(userDTO);
 		user.setCreatedAt(LocalDateTime.now());
 		user.setUpdatedAt(LocalDateTime.now());
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        return userRepository.save(user);
+		userRepository.save(user);
 	}
 
 	/**
