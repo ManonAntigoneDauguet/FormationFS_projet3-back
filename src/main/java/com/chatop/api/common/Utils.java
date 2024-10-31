@@ -38,7 +38,7 @@ public class Utils {
             String fileName = createFileName(file);
 
             String projectRootDirectory = Paths.get("").toAbsolutePath().toString();
-            Path filePath = Paths.get(projectRootDirectory, "savedPictures", fileName);
+            Path filePath = Paths.get(projectRootDirectory, "src/main/resources/static/pictures", fileName);
 
             Files.createDirectories(filePath.getParent());
             file.transferTo(filePath.toFile());
@@ -62,4 +62,5 @@ public class Utils {
 
         return fileExtension.equalsIgnoreCase("png") || fileExtension.equalsIgnoreCase("jpg");
     }
+
 }
