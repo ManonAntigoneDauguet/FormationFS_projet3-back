@@ -1,4 +1,4 @@
-package com.chatop.api.service.DTO;
+package com.chatop.api.service.DTO.apiRequest;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
-public class RentalDTO {
+public class RentalRequestDTO {
 
     @NotBlank(message = "name is required")
     private String name;

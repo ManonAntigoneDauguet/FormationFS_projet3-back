@@ -1,6 +1,7 @@
 package com.chatop.api.business.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,8 +35,8 @@ public class Rental {
 	private Integer ownerId;
 	
 	@Column(name="created_at")
-	private LocalDateTime createdAt;
+	private Date createdAt;
 	
 	@Column(name="updated_at")
-	private LocalDateTime updatedAt;
+	private Date updatedAt;
 }

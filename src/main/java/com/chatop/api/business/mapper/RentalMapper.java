@@ -1,46 +1,46 @@
 package com.chatop.api.business.mapper;
 
 import com.chatop.api.business.entity.Rental;
-import com.chatop.api.service.DTO.RentalDTO;
+import com.chatop.api.service.DTO.apiRequest.RentalRequestDTO;
+import com.chatop.api.service.DTO.apiResponse.RentalResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RentalMapper {
 
     /**
-     * Converts a RentalDTO object into a Rental object
+     * Converts a RentalRequestDTO object into a Rental object
      *
-     * @param rentalDTO as the RentalDTO to convert
-     * @return RentalDTO
+     * @param requestDTO as the RentalRequestDTO to convert
+     * @return Rental
      */
-    public Rental convertToEntity(RentalDTO rentalDTO) {
-        if (rentalDTO == null) return null;
-
+    public Rental convertToEntity(RentalRequestDTO requestDTO) {
         Rental rental = new Rental();
-        rental.setName(rentalDTO.getName());
-        rental.setSurface(rentalDTO.getSurface());
-        rental.setPrice(rentalDTO.getPrice());
+        rental.setName(requestDTO.getName());
+        rental.setSurface(requestDTO.getSurface());
+        rental.setPrice(requestDTO.getPrice());
         // ADD PICTURE
-        rental.setDescription(rentalDTO.getDescription());
+        rental.setDescription(requestDTO.getDescription());
 
         return rental;
     }
 
     /**
-     * Converts a Rental object into a RentalDTO object
+     * Converts a Rental object into a RentalResponseDTO object
      *
      * @param rental as the rental to convert
-     * @return Rental
+     * @return RentalResponseDTO
      */
-    public RentalDTO convertToDTO(Rental rental) {
-        if (rental == null) return null;
+    public RentalResponseDTO convertToResponseDTO(Rental rental) {
+        RentalResponseDTO responseDTO = new RentalResponseDTO();
+        responseDTO.setName(rental.getName());
+        responseDTO.setSurface(rental.getSurface());
+        responseDTO.setPrice(rental.getPrice());
+        // ADD PICTURE
+        responseDTO.setDescription(rental.getDescription());
+        responseDTO.setCreatedAt(rental.getCreatedAt());
+        responseDTO.setUpdatedAt(rental.getUpdatedAt());
 
-        RentalDTO rentalDTO = new RentalDTO();
-        rentalDTO.setName(rental.getName());
-        rentalDTO.setSurface(rental.getSurface());
-        rentalDTO.setPrice(rental.getPrice());
-        rentalDTO.setDescription(rental.getDescription());
-
-        return rentalDTO;
+        return responseDTO;
     }
 }
