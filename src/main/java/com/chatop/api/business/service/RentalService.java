@@ -70,10 +70,15 @@ public class RentalService {
 	public void createRental(RentalRequestDTO rentalRequestDTO) {
 		Date today = Date.from(new Date().toInstant());
 
-		Rental rental = rentalMapper.convertToEntity(rentalRequestDTO);
-		rental.setCreatedAt(today);
-		rental.setUpdatedAt(today);
-		rentalRepository.save(rental);
+		try {
+			Rental rental = rentalMapper.convertToEntity(rentalRequestDTO);
+			rental.setCreatedAt(today);
+			rental.setUpdatedAt(today);
+			rentalRepository.save(rental);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	/**

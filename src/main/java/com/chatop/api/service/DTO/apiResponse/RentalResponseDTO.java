@@ -16,7 +16,7 @@ public class RentalResponseDTO {
 
     private Double price;
 
-    // ADD PICTURE
+    private String picture;
 
     private String description;
 

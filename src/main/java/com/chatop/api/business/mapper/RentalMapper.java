@@ -5,6 +5,8 @@ import com.chatop.api.service.DTO.apiRequest.RentalRequestDTO;
 import com.chatop.api.service.DTO.apiResponse.RentalResponseDTO;
 import org.springframework.stereotype.Component;
 
+import static com.chatop.api.common.Utils.uploadFile;
+
 @Component
 public class RentalMapper {
 
@@ -16,11 +18,14 @@ public class RentalMapper {
      */
     public Rental convertToEntity(RentalRequestDTO requestDTO) {
         Rental rental = new Rental();
+
         rental.setName(requestDTO.getName());
         rental.setSurface(requestDTO.getSurface());
         rental.setPrice(requestDTO.getPrice());
-        // ADD PICTURE
         rental.setDescription(requestDTO.getDescription());
+
+        String fileName = uploadFile(requestDTO.getPicture());
+        rental.setPicture(fileName);
 
         return rental;
     }
@@ -33,11 +38,12 @@ public class RentalMapper {
      */
     public RentalResponseDTO convertToResponseDTO(Rental rental) {
         RentalResponseDTO responseDTO = new RentalResponseDTO();
+
         responseDTO.setId(rental.getId());
         responseDTO.setName(rental.getName());
         responseDTO.setSurface(rental.getSurface());
         responseDTO.setPrice(rental.getPrice());
-        // ADD PICTURE
+        responseDTO.setPicture(rental.getPicture());
         responseDTO.setDescription(rental.getDescription());
         responseDTO.setOwnerId(rental.getOwnerId());
         responseDTO.setCreatedAt(rental.getCreatedAt());
