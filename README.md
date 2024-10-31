@@ -2,7 +2,9 @@
 Welcome to the back part of the application ChâTop !  
 To access to the front part, [go to this link](https://github.com/ManonAntigoneDauguet/FormationFS_projet2).
 
-Feel free to check out the [documentation of the API](http://localhost:3001/api/swagger-ui/index.html).
+Feel free to check out the [documentation of the API :
+- with [this link](http://localhost:3001/api/swagger-ui/index.html) if the is launching
+- with [this file](api-docs.json) to load into [Swagger Editor](https://editor.swagger.io/)
 
 ## Dependencies
 
@@ -17,3 +19,5 @@ After to create your own database, save your password and username in a `.env` f
 Running the project generate the necessary tables in the database and allow to use the necessary endpoints of the application.   
 
 The server run on the port 3001.
+
+When the server is launching, you can consult the documentation of the API with [this link](http://localhost:3001/api/swagger-ui/index.html).

@@ -1,16 +1,14 @@
 package com.chatop.api.service.controller;
 
+import com.chatop.api.business.service.MessageService;
+import com.chatop.api.service.DTO.MessageDTO;
+import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.chatop.api.service.DTO.MessageDTO;
-import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
-import com.chatop.api.service.service.MessageService;
-
-import jakarta.validation.Valid;
 
 @RestController
 public class MessageController {
@@ -26,6 +24,7 @@ public class MessageController {
 	 */
 	@PostMapping("/messages")
 	public ResponseEntity<ApiMessageResponse> createMessage(@Valid @RequestBody MessageDTO messageDTO) {
-		return messageService.createMessage(messageDTO);
+		messageService.createMessage(messageDTO);
+		return ResponseEntity.ok(new ApiMessageResponse("Message send with success"));
 	}
 }

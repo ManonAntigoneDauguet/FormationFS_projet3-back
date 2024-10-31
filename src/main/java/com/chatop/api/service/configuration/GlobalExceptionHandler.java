@@ -1,5 +1,6 @@
 package com.chatop.api.service.configuration;
 
+import com.chatop.api.service.exception.PictureUploadException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -26,5 +27,15 @@ public class GlobalExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage());
         }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Allows to avert the user that the picture could not be loaded
+     * @param e as PictureUploadException
+     * @return ResponseEntity
+     */
+    @ExceptionHandler(PictureUploadException.class)
+    public ResponseEntity<String> handleUploadPictureExceptions(PictureUploadException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

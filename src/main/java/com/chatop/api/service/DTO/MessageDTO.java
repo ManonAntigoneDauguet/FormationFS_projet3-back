@@ -16,6 +16,6 @@ public class MessageDTO {
 	@Positive(message = "rental_id must be a positive number")
 	private Long user_id;
 
-	@NotBlank(message = "Message is required")
+	@NotBlank(message = "message is required")
 	private String message;
 }

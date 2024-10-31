@@ -1,16 +1,18 @@
-package com.chatop.api.service.service;
+package com.chatop.api.business.service;
 
 import com.chatop.api.business.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.chatop.api.service.DTO.MessageDTO;
-import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
 import com.chatop.api.business.entity.Message;
 import com.chatop.api.service.repository.MessageRepository;
 
 import lombok.Data;
+
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Service
@@ -24,13 +26,15 @@ public class MessageService {
 
 	/**
 	 * Saves the message
-	 * 
+	 *
 	 * @param messageDTO as the message to send
-	 * @return notification
-	 */
-	public ResponseEntity<ApiMessageResponse> createMessage(MessageDTO messageDTO) {
+     */
+	public void createMessage(MessageDTO messageDTO) {
+		Date today = Date.from(new Date().toInstant());
+
 		Message message = messageMapper.convertToEntity(messageDTO);
+		message.setCreatedAt(today);
+		message.setUpdatedAt(today);
 		messageRepository.save(message);
-		return ResponseEntity.ok(new ApiMessageResponse("Message send with success"));
 	}
 }
