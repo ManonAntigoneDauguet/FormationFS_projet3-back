@@ -28,16 +28,18 @@ public class RentalMapper {
     /**
      * Converts a Rental object into a RentalResponseDTO object
      *
-     * @param rental as the rental to convert
+     * @param rental as the Rental to convert
      * @return RentalResponseDTO
      */
     public RentalResponseDTO convertToResponseDTO(Rental rental) {
         RentalResponseDTO responseDTO = new RentalResponseDTO();
+        responseDTO.setId(rental.getId());
         responseDTO.setName(rental.getName());
         responseDTO.setSurface(rental.getSurface());
         responseDTO.setPrice(rental.getPrice());
         // ADD PICTURE
         responseDTO.setDescription(rental.getDescription());
+        responseDTO.setOwnerId(rental.getOwnerId());
         responseDTO.setCreatedAt(rental.getCreatedAt());
         responseDTO.setUpdatedAt(rental.getUpdatedAt());
 

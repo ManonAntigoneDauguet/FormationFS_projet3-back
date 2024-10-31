@@ -14,8 +14,6 @@ public class MessageMapper {
      * @return Message
      */
     public Message convertToEntity(MessageDTO messageDTO) {
-        if (messageDTO == null) return null;
-
         Message message = new Message();
         message.setMessage(messageDTO.getMessage());
         message.setRentalId(messageDTO.getRental_id());
@@ -27,12 +25,10 @@ public class MessageMapper {
     /**
      * Converts a Message object into a MessageDTO object
      *
-     * @param message as the message to convert
-     * @return Message
+     * @param message as the Message to convert
+     * @return MessageDTO
      */
     public MessageDTO convertToDTO(Message message) {
-        if (message == null) return null;
-
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setMessage(message.getMessage());
         messageDTO.setRental_id(message.getRentalId());

@@ -1,7 +1,8 @@
 package com.chatop.api.business.mapper;
 
 import com.chatop.api.business.entity.User;
-import com.chatop.api.service.DTO.UserDTO;
+import com.chatop.api.service.DTO.apiRequest.UserRequestDTO;
+import com.chatop.api.service.DTO.apiResponse.UserResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,35 +11,33 @@ public class UserMapper {
     /**
      * Converts a UserDTO object into a User object
      *
-     * @param userDTO as the UserDTO to convert
+     * @param userRequestDTO as the UserDTO to convert
      * @return User
      */
-    public User convertToEntity(UserDTO userDTO) {
-        if (userDTO == null) return null;
-
+    public User convertToEntity(UserRequestDTO userRequestDTO) {
         User user = new User();
-        user.setName(userDTO.getName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        user.setName(userRequestDTO.getName());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPassword(userRequestDTO.getPassword());
 
         return user;
     }
 
     /**
-     * Converts a User object into a UserDTO object
+     * Converts a User object into a UserResponseDTO object
      *
-     * @param user as the user to convert
-     * @return UserDTO
+     * @param user as the User to convert
+     * @return UserResponseDTO
      */
-    public UserDTO convertToDTO(User user) {
-        if (user == null) return null;
+    public UserResponseDTO convertToResponseDTO(User user) {
+        UserResponseDTO responseDTO = new UserResponseDTO();
+        responseDTO.setId(user.getId());
+        responseDTO.setName(user.getName());
+        responseDTO.setEmail(user.getEmail());
+        responseDTO.setCreatedAt(user.getCreatedAt());
+        responseDTO.setUpdatedAt(user.getUpdatedAt());
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName(user.getName());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(user.getPassword());
-
-        return userDTO;
+        return responseDTO;
     }
 
 }

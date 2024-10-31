@@ -2,6 +2,7 @@ package com.chatop.api.service.controller;
 
 import com.chatop.api.business.entity.User;
 import com.chatop.api.business.service.UserService;
+import com.chatop.api.service.DTO.apiResponse.UserResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class UserController {
     @GetMapping("/user/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable("id") final Long id) {
         try {
-            User user = userService.getUserById(id);
+            UserResponseDTO user = userService.getUserById(id);
             return ResponseEntity.ok(user);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

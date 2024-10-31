@@ -10,7 +10,9 @@ import com.chatop.api.service.repository.MessageRepository;
 
 import lombok.Data;
 
+import java.text.DateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Service
@@ -28,9 +30,11 @@ public class MessageService {
 	 * @param messageDTO as the message to send
      */
 	public void createMessage(MessageDTO messageDTO) {
+		Date today = Date.from(new Date().toInstant());
+
 		Message message = messageMapper.convertToEntity(messageDTO);
-		message.setCreatedAt(LocalDateTime.now());
-		message.setUpdatedAt(LocalDateTime.now());
+		message.setCreatedAt(today);
+		message.setUpdatedAt(today);
 		messageRepository.save(message);
 	}
 }

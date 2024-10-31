@@ -1,7 +1,7 @@
 package com.chatop.api.service.controller;
 
 import com.chatop.api.business.service.UserService;
-import com.chatop.api.service.DTO.UserDTO;
+import com.chatop.api.service.DTO.apiRequest.UserRequestDTO;
 import com.chatop.api.service.DTO.apiRequest.LoginRequest;
 import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
 import com.chatop.api.service.DTO.apiResponse.ApiResponse;
@@ -34,12 +34,12 @@ public class AuthController {
     /**
      * Allows to add a new user
      *
-     * @param userDTO as the user to create
+     * @param userRequestDTO as the user to create
      * @return JWT token
      */
     @PostMapping("auth/register")
-    public ResponseEntity<ApiResponse> register(@Valid @RequestBody UserDTO userDTO) {
-        userService.register(userDTO);
+    public ResponseEntity<ApiResponse> register(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        userService.register(userRequestDTO);
         return ResponseEntity.ok(new ApiMessageResponse("REGISTRER !")); // Must to return a token
     }
 

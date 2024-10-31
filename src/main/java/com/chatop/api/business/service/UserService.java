@@ -1,9 +1,10 @@
 package com.chatop.api.business.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.chatop.api.business.mapper.UserMapper;
-import com.chatop.api.service.DTO.UserDTO;
+import com.chatop.api.service.DTO.apiRequest.UserRequestDTO;
+import com.chatop.api.service.DTO.apiResponse.UserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,24 +28,27 @@ public class UserService {
 	/**
 	 * Saves the new user
 	 * 
-	 * @param userDTO as the new user to save
+	 * @param userRequestDTO as the new user to save
 	 */
-	public void register(UserDTO userDTO) {
-		User user = userMapper.convertToEntity(userDTO);
-		user.setCreatedAt(LocalDateTime.now());
-		user.setUpdatedAt(LocalDateTime.now());
+	public void register(UserRequestDTO userRequestDTO) {
+		Date today = Date.from(new Date().toInstant());
+
+		User user = userMapper.convertToEntity(userRequestDTO);
+		user.setCreatedAt(today);
+		user.setUpdatedAt(today);
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		userRepository.save(user);
 	}
 
 	/**
 	 * Finds the user by id
-	 * 
+	 *
 	 * @param id as the user id
 	 * @return user
 	 */
-	public User getUserById(Long id) {
-		return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+	public UserResponseDTO getUserById(Long id) {
+		User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+		return userMapper.convertToResponseDTO(user);
 	}
 	
 	/**

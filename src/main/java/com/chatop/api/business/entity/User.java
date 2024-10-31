@@ -1,6 +1,7 @@
 package com.chatop.api.business.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
@@ -24,12 +25,11 @@ public class User {
 
     private String email;
 
-    @JsonIgnore
     private String password;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 }
