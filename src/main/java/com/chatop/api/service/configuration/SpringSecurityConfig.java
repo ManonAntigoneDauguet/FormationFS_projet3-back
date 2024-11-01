@@ -63,7 +63,7 @@ public class SpringSecurityConfig {
 						.requestMatchers("/secur/**").authenticated().requestMatchers("/**").permitAll()); // Remove more later
 //	            .anyRequest().authenticated())
 
-//	        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+//	        .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtEncoder()))
 		;
 
 		return http.build();
@@ -76,7 +76,7 @@ public class SpringSecurityConfig {
 	 */
 	@Bean
 	public JwtDecoder jwtDecoder() {
-		SecretKeySpec secretKey = new SecretKeySpec(this.jwtKey.getBytes(), 0, this.jwtKey.getBytes().length, "RSA");
+		SecretKeySpec secretKey = new SecretKeySpec(jwtKey.getBytes(), "HmacSHA256");
 		return NimbusJwtDecoder.withSecretKey(secretKey).macAlgorithm(MacAlgorithm.HS256).build();
 	}
 
@@ -85,7 +85,7 @@ public class SpringSecurityConfig {
 	 * 
 	 * @return JwtEncoder
 	 */
-	@Bean
+	@Bean(name="myencoder")
 	public JwtEncoder jwtEncoder() {
 		return new NimbusJwtEncoder(new ImmutableSecret<>(this.jwtKey.getBytes()));
 	}

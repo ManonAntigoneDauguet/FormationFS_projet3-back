@@ -1,6 +1,7 @@
 package com.chatop.api.service.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
@@ -16,6 +17,7 @@ import java.time.temporal.ChronoUnit;
 public class JWTService {
 	
 	@Autowired
+	@Qualifier("myencoder")
 	private JwtEncoder jwtEncoder;
 	
 	public String generateToken(Authentication authentication) {
