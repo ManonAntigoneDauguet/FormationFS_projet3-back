@@ -40,7 +40,12 @@ public class AuthController {
     @PostMapping("auth/register")
     public ResponseEntity<ApiResponse> register(@Valid @RequestBody UserRequestDTO userRequestDTO) {
         userService.register(userRequestDTO);
-        return ResponseEntity.ok(new ApiMessageResponse("REGISTRER !")); // Must to return a token
+
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setPassword(userRequestDTO.getPassword());
+        loginRequest.setEmail(userRequestDTO.getEmail());
+
+        return login(loginRequest);
     }
 
     /**
@@ -50,7 +55,7 @@ public class AuthController {
      * @return token
      */
     @PostMapping("/auth/login")
-    public ResponseEntity<ApiResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
