@@ -14,6 +14,9 @@ public class RentalMapper {
     @Value("${server.base-pictures-url}")
     private String basePictureUrl;
 
+    @Value("${path.saving.picture}")
+    private String pathSavingPicture;
+
     /**
      * Converts a RentalRequestDTO object into a Rental object
      *
@@ -28,7 +31,7 @@ public class RentalMapper {
         rental.setPrice(requestDTO.getPrice());
         rental.setDescription(requestDTO.getDescription());
 
-        String fileName = uploadFile(requestDTO.getPicture());
+        String fileName = uploadFile(requestDTO.getPicture(), pathSavingPicture);
         rental.setPicture(fileName);
 
         return rental;

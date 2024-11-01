@@ -1,6 +1,7 @@
 package com.chatop.api.common;
 
 import com.chatop.api.service.exception.PictureUploadException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,16 +30,17 @@ public class Utils {
      * Allows to save a file into a folder and return his unique name
      *
      * @param file as the file ti save
+     * @param directoryPath as the path to the target folder
      * @return fileName as the name of the uploaded file
      */
-    public static String uploadFile(MultipartFile file) {
+    public static String uploadFile(MultipartFile file, String directoryPath) {
         if (!isValidPicture(file)) throw new PictureUploadException("The file must be a png or a jpg file");
 
         try {
             String fileName = createFileName(file);
 
             String projectRootDirectory = Paths.get("").toAbsolutePath().toString();
-            Path filePath = Paths.get(projectRootDirectory, "src/main/resources/static/pictures", fileName);
+            Path filePath = Paths.get(projectRootDirectory, directoryPath, fileName);
 
             Files.createDirectories(filePath.getParent());
             file.transferTo(filePath.toFile());
