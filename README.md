@@ -15,12 +15,14 @@ This project is using java 17.
 After to create your own database, save your password and username in a `.env` file under these constants :
 - DATABASE_USERNAME
 - DATABASE_PASSWORD
+- KEY
 
 Running the project generate the necessary tables in the database and allow to use the necessary endpoints of the application.   
 
 The server run on the port 3001.
 
-When the server is launching, you can consult the documentation of the API with [this link](http://localhost:3001/api/swagger-ui/index.html).
+When the server is launching, you can consult the documentation of the API with [this link](http://localhost:3001/api/swagger-ui/index.html).  
+You can run with `java -DDATABASE_USERNAME= youruser-DDATABASE_PASSWORD=yourpassword -DKEY=hjxgsqhdshdfgdsfkdsjhfgdkjsgfkj chatop.jar`.
 
 ## Access to uploaded pictures
 

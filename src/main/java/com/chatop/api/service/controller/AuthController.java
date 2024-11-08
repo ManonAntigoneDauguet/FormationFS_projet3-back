@@ -6,7 +6,7 @@ import com.chatop.api.service.DTO.apiRequest.LoginRequest;
 import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
 import com.chatop.api.service.DTO.apiResponse.ApiResponse;
 import com.chatop.api.service.DTO.apiResponse.ApiTokenResponse;
-import com.chatop.api.service.service.JWTService;
+import com.chatop.api.service.security.JWTService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
