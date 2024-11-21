@@ -1,7 +1,7 @@
 package com.chatop.api.business.mapper;
 
 import com.chatop.api.business.entity.Rental;
-import com.chatop.api.service.DTO.apiRequest.RentalRequestDTO;
+import com.chatop.api.service.DTO.apiRequest.RentalPostRequestDTO;
 import com.chatop.api.service.DTO.apiResponse.RentalResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class RentalMapper {
      * @param requestDTO as the RentalRequestDTO to convert
      * @return Rental
      */
-    public Rental convertToEntity(RentalRequestDTO requestDTO) {
+    public Rental convertToEntity(RentalPostRequestDTO requestDTO) {
         Rental rental = new Rental();
 
         rental.setName(requestDTO.getName());

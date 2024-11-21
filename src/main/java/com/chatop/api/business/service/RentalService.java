@@ -1,20 +1,19 @@
 package com.chatop.api.business.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.chatop.api.business.entity.Rental;
 import com.chatop.api.business.mapper.RentalMapper;
-import com.chatop.api.service.DTO.apiRequest.RentalRequestDTO;
+import com.chatop.api.service.DTO.apiRequest.RentalPostRequestDTO;
+import com.chatop.api.service.DTO.apiRequest.RentalPutRequestDTO;
 import com.chatop.api.service.DTO.apiResponse.RentalResponseDTO;
+import com.chatop.api.service.repository.RentalRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chatop.api.business.entity.Rental;
-import com.chatop.api.service.repository.RentalRepository;
-
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Service
@@ -65,13 +64,13 @@ public class RentalService {
 	/**
 	 * Saves the rental
 	 * 
-	 * @param rentalRequestDTO as the rental to create
+	 * @param rentalPostRequestDTO as the rental to create
      */
-	public void createRental(RentalRequestDTO rentalRequestDTO) {
+	public void createRental(RentalPostRequestDTO rentalPostRequestDTO) {
 		Date today = Date.from(new Date().toInstant());
 
 		try {
-			Rental rental = rentalMapper.convertToEntity(rentalRequestDTO);
+			Rental rental = rentalMapper.convertToEntity(rentalPostRequestDTO);
 			rental.setCreatedAt(today);
 			rental.setUpdatedAt(today);
 			rentalRepository.save(rental);
@@ -86,7 +85,7 @@ public class RentalService {
 	 * @param oldRental as the found rental
 	 * @param updatedData as the RentalDTO with the new information
      */
-	public void updateRental(Rental oldRental, RentalRequestDTO updatedData) {
+	public void updateRental(Rental oldRental, RentalPutRequestDTO updatedData) {
 		Date today = Date.from(new Date().toInstant());
 
 		oldRental.setName(updatedData.getName());

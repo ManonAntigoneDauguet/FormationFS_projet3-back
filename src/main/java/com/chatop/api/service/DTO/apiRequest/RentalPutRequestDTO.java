@@ -6,10 +6,8 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.image.BufferedImage;
-
 @Data
-public class RentalRequestDTO {
+public class RentalPutRequestDTO {
 
     @NotBlank(message = "name is required")
     private String name;
@@ -17,9 +15,6 @@ public class RentalRequestDTO {
     @NotNull(message = "surface is required")
     @Positive(message = "surface must be a positive number")
     private Double surface;
-
-    @NotNull(message = "picture is required")
-    private MultipartFile picture;
 
     @NotNull(message = "price is required")
     @Positive(message = "price must be a positive number")
