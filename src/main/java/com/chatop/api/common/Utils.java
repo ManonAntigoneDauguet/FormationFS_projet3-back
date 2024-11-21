@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Component
@@ -37,12 +38,9 @@ public class Utils {
 
         try {
             String fileName = createFileName(file);
-
-            String projectRootDirectory = Paths.get("").toAbsolutePath().toString();
-            Path filePath = Paths.get(projectRootDirectory, directoryPath, fileName);
-
+            Path filePath = Paths.get(directoryPath, fileName);
             Files.createDirectories(filePath.getParent());
-            file.transferTo(filePath.toFile());
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Image saved successfully into " + filePath);
             return fileName;
         } catch (Exception e) {

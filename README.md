@@ -55,11 +55,8 @@ The project follows a layered architecture.
 
 ## Access to uploaded pictures
 
-The API allows the user to save a picture on action POST "/rentals".  
-This picture is saved into the folder driven by the environment variable `path.saving.picture`(by default `src/main/resources/static/pictures`)  
-The API allow to return the saved picture by the `server.base-pictures-url` (by default `http://localhost:3001/pictures/`)
-
-With the default parameters, the pictures are saved into a static folder. So the API can return the information about the picture with `server.base-pictures-url` without specific endpoints.
+The API allows the user to save a picture on action POST `/rentals`.  
+This picture is saved into the folder driven by the environment variable `path.saving.picture`(by default `C:\\Documents\\projet4.pictures\\`)
 
 ## About database
 
