@@ -31,6 +31,8 @@ Running the project generate the necessary tables in the database and allow to u
 The server run on the port 3001.
 
 When the server is launching, you can consult the documentation of the API with [this link](http://localhost:3001/api/swagger-ui/index.html).  
+Note : by default the JWT token expiration time is set on 1 day. You can change this setting in the `application.properties` file with the `chatop.app.jwtExpirationMs` property.
+
 You can run with `java -DDATABASE_USERNAME= youruser-DDATABASE_PASSWORD=yourpassword -DKEY=hjxgsqhdshdfgdsfkdsjhfgdkjsgfkj chatop.jar`.
 
 ## Architecture of the application

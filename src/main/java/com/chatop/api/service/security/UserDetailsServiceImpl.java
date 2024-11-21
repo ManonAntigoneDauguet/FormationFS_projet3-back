@@ -15,12 +15,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     /**
-     * Load the user data into the database
+     * Loads the user's details from the database based on his email, and return it with a compatible format for Spring Security
+     *
+     * @param email the username identifying the user whose data is required.
+     * @return UserDetails
+     * @throws UsernameNotFoundException
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
-        return UserDetailsImpl.builder(user);
+        return UserDetailsImpl.convertToUserDetailsImpl(user);
     }
 }

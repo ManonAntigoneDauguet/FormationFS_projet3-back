@@ -25,6 +25,9 @@ public class RentalService {
 	@Autowired
 	private RentalMapper rentalMapper;
 
+	@Autowired
+	private UserService userService;
+
 	/**
 	 * Finds all the rentals
 	 * 
@@ -68,11 +71,13 @@ public class RentalService {
      */
 	public void createRental(RentalPostRequestDTO rentalPostRequestDTO) {
 		Date today = Date.from(new Date().toInstant());
+		Long ownerId = userService.getUserByAuthentication().getId();
 
 		try {
 			Rental rental = rentalMapper.convertToEntity(rentalPostRequestDTO);
 			rental.setCreatedAt(today);
 			rental.setUpdatedAt(today);
+			rental.setOwnerId(ownerId);
 			rentalRepository.save(rental);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

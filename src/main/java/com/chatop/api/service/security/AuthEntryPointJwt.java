@@ -1,6 +1,5 @@
 package com.chatop.api.service.security;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
@@ -16,8 +15,15 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
     Logger logger = LogManager.getLogger(this.getClass());
 
+    /**
+     * Handles authentication errors
+     *
+     * @param request       that resulted in an <code>AuthenticationException</code>
+     * @param response      so that the user agent can begin authentication
+     * @param authException that caused the invocation
+     */
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         logger.error("Unauthorized error: {}", authException.getMessage());
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
     }

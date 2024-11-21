@@ -16,6 +16,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Intercepts all HTTP requests before they reach application controllers
+ */
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
     Logger logger = LogManager.getLogger(this.getClass());
@@ -26,22 +29,30 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    /**
+     * Checks if the token is valid and allows it utilisation for authentication
+     *
+     * @param request as HttpServletRequest
+     * @param response as HttpServletResponse
+     * @param filterChain as FilterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = parseJwt(request);
             if (token != null && jwtService.validateJwtToken(token)) {
-                // vérifier l'authentofication
+                // Load the concerned user
                 String email = jwtService.getUserNameFromJwtToken(token);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                // mise à jour du context du thread en cours
+                // Updates the SecurityContextHolder
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,
                                 null,
                                 userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (RuntimeException e) {

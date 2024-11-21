@@ -29,12 +29,19 @@ public class UserDetailsImpl implements UserDetails {
         this.password = password;
     }
 
-    public static UserDetailsImpl builder(User user) {
+    /**
+     * Convert a User entity into a UserDetailsImpl (compatible with Spring Security)
+     *
+     * @param user as User entity
+     * @return UserDetailsImpl
+     */
+    public static UserDetailsImpl convertToUserDetailsImpl(User user) {
         return new UserDetailsImpl(
                 user.getId(),
                 user.getEmail(),
                 user.getName(),
-                user.getPassword());
+                user.getPassword()
+        );
     }
 
     @Override

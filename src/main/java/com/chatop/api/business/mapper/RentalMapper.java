@@ -30,7 +30,6 @@ public class RentalMapper {
         rental.setSurface(requestDTO.getSurface());
         rental.setPrice(requestDTO.getPrice());
         rental.setDescription(requestDTO.getDescription());
-
         String fileName = uploadFile(requestDTO.getPicture(), pathSavingPicture);
         rental.setPicture(fileName);
 

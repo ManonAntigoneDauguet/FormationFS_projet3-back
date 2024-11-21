@@ -1,7 +1,6 @@
 package com.chatop.api.service.DTO.apiResponse;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,7 +19,7 @@ public class RentalResponseDTO {
 
     private String description;
 
-    private Integer ownerId;
+    private Long ownerId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
     private Date createdAt;

@@ -1,6 +1,5 @@
 package com.chatop.api.service.controller;
 
-import com.chatop.api.business.entity.User;
 import com.chatop.api.business.service.UserService;
 import com.chatop.api.service.DTO.apiResponse.UserResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
