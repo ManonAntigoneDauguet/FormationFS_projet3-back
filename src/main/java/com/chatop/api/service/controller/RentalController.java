@@ -63,6 +63,9 @@ public class RentalController {
     public ResponseEntity<ApiMessageResponse> updateRental(@Valid @ModelAttribute RentalPutRequestDTO updatedData, @PathVariable("id") final Long id) {
         try {
             Rental oldRental = rentalService.findRentalById(id);
+            if (!rentalService.checkIfOwnRental(oldRental))
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiMessageResponse("You can only update your own rentals"));
+
             rentalService.updateRental(oldRental, updatedData);
             return ResponseEntity.ok(new ApiMessageResponse("Rental updated !"));
         } catch (EntityNotFoundException e) {
