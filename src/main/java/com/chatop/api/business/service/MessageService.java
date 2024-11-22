@@ -1,17 +1,13 @@
 package com.chatop.api.business.service;
 
+import com.chatop.api.business.entity.Message;
 import com.chatop.api.business.mapper.MessageMapper;
+import com.chatop.api.service.DTO.MessageDTO;
+import com.chatop.api.service.repository.MessageRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chatop.api.service.DTO.MessageDTO;
-import com.chatop.api.business.entity.Message;
-import com.chatop.api.service.repository.MessageRepository;
-
-import lombok.Data;
-
-import java.text.DateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data

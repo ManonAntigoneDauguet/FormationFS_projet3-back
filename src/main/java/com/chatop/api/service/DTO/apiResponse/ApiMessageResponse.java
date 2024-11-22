@@ -3,7 +3,7 @@ package com.chatop.api.service.DTO.apiResponse;
 import lombok.Data;
 
 @Data
-public class ApiMessageResponse implements ApiResponse {
+public class ApiMessageResponse {
 
 	private String message;
 	

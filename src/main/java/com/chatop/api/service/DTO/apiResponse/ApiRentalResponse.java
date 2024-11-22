@@ -3,7 +3,7 @@ package com.chatop.api.service.DTO.apiResponse;
 import lombok.Data;
 
 @Data
-public class ApiRentalResponse implements ApiResponse {
+public class ApiRentalResponse {
 
     private Iterable<RentalResponseDTO> rentals;
 

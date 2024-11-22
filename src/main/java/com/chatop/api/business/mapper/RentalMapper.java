@@ -1,7 +1,7 @@
 package com.chatop.api.business.mapper;
 
 import com.chatop.api.business.entity.Rental;
-import com.chatop.api.service.DTO.apiRequest.RentalRequestDTO;
+import com.chatop.api.service.DTO.apiRequest.RentalPostRequestDTO;
 import com.chatop.api.service.DTO.apiResponse.RentalResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,21 +14,23 @@ public class RentalMapper {
     @Value("${server.base-pictures-url}")
     private String basePictureUrl;
 
+    @Value("${path.saving.picture}")
+    private String pathSavingPicture;
+
     /**
      * Converts a RentalRequestDTO object into a Rental object
      *
      * @param requestDTO as the RentalRequestDTO to convert
      * @return Rental
      */
-    public Rental convertToEntity(RentalRequestDTO requestDTO) {
+    public Rental convertToEntity(RentalPostRequestDTO requestDTO) {
         Rental rental = new Rental();
 
         rental.setName(requestDTO.getName());
         rental.setSurface(requestDTO.getSurface());
         rental.setPrice(requestDTO.getPrice());
         rental.setDescription(requestDTO.getDescription());
-
-        String fileName = uploadFile(requestDTO.getPicture());
+        String fileName = uploadFile(requestDTO.getPicture(), pathSavingPicture);
         rental.setPicture(fileName);
 
         return rental;

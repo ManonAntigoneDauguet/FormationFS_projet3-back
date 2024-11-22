@@ -1,15 +1,9 @@
 package com.chatop.api.business.entity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -32,7 +26,7 @@ public class Rental {
 	private String description;
 	
 	@Column(name="owner_id")
-	private Integer ownerId;
+	private Long ownerId;
 	
 	@Column(name="created_at")
 	private Date createdAt;

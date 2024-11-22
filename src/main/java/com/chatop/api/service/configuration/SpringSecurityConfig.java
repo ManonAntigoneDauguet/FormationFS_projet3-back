@@ -1,93 +1,96 @@
 package com.chatop.api.service.configuration;
 
-import javax.crypto.spec.SecretKeySpec;
-
+import com.chatop.api.service.security.AuthEntryPointJwt;
+import com.chatop.api.service.security.AuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SpringSecurityConfig {
 
-	private final String jwtKey = "ThisIsASecretKeyThatIsAtLeast32BytesLong"; // to change
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
 
-	/**
-	 * Creates and configures the AuthenticationManager necessary for the login
-	 * 
-	 * @param http
-	 * @return AuthenticationManager
-	 * @throws Exception
-	 */
-	@Bean
-	public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-		AuthenticationManagerBuilder authenticationManagerBuilder = http
-				.getSharedObject(AuthenticationManagerBuilder.class);
-		authenticationManagerBuilder.userDetailsService(userDetailsService)
-				.passwordEncoder(new BCryptPasswordEncoder());
-		return authenticationManagerBuilder.build();
-	}
+    /**
+     * Creates and configures the AuthenticationManager necessary for the login
+     *
+     * @return AuthenticationManager
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
 
-	/**
-	 * Configures the security of the api
-	 * 
-	 * @param http
-	 * @return
-	 * @throws Exception
-	 */
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable()) // Remove for the prod
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    /**
+     * Creates and configures the DaoAuthenticationProvider necessary to validate the email and password for the login request
+     *
+     * @return DaoAuthenticationProvider
+     */
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
 
-				.authorizeHttpRequests((auth) -> auth
-						.requestMatchers("/auth/**").permitAll()
-						.requestMatchers("/secur/**").authenticated().requestMatchers("/**").permitAll()); // Remove more later
-//	            .anyRequest().authenticated())
+    /**
+     * Configures the security of the api
+     *
+     * @param http as HttpSecurity
+     * @return SecurityFilterChain
+     * @throws Exception
+     */
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable()) // Remove for the prod
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .authorizeHttpRequests((auth) -> auth
+                        // For the authentication
+                        .requestMatchers("/auth/register", "/auth/login").permitAll()
+                        // Until the front-end send the token for this route
+                        .requestMatchers("/pictures/**").permitAll()
+                        // SWAGGER documentation
+                        .requestMatchers("/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                        .anyRequest().authenticated());
+        http.authenticationProvider(authenticationProvider());
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-//	        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-		;
+        return http.build();
+    }
 
-		return http.build();
-	}
+    /**
+     * Creates the password encoder
+     *
+     * @return PasswordEncoder
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	/**
-	 * Creates the JxtDecode allowing to valid the token
-	 * 
-	 * @return JwtDecoder
-	 */
-	@Bean
-	public JwtDecoder jwtDecoder() {
-		SecretKeySpec secretKey = new SecretKeySpec(this.jwtKey.getBytes(), 0, this.jwtKey.getBytes().length, "RSA");
-		return NimbusJwtDecoder.withSecretKey(secretKey).macAlgorithm(MacAlgorithm.HS256).build();
-	}
-
-	/**
-	 * Creates the JwtEncoder allowing to create the token
-	 * 
-	 * @return JwtEncoder
-	 */
-	@Bean
-	public JwtEncoder jwtEncoder() {
-		return new NimbusJwtEncoder(new ImmutableSecret<>(this.jwtKey.getBytes()));
-	}
-
+    /**
+     * Return the personalised filter
+     *
+     * @return AuthenticationTokenFilter
+     */
+    @Bean
+    public AuthenticationTokenFilter authenticationJwtTokenFilter() {
+        return new AuthenticationTokenFilter();
+    }
 }
