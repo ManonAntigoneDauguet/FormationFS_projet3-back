@@ -61,7 +61,11 @@ public class SpringSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests((auth) -> auth
+                        // For the authentication
                         .requestMatchers("/auth/register", "/auth/login").permitAll()
+                        // Until the front-end send the token for this route
+                        .requestMatchers("/pictures/**").permitAll()
+                        // SWAGGER documentation
                         .requestMatchers("/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());

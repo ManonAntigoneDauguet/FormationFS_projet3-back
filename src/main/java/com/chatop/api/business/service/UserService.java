@@ -1,24 +1,20 @@
 package com.chatop.api.business.service;
 
-import java.util.Date;
-
+import com.chatop.api.business.entity.User;
 import com.chatop.api.business.mapper.UserMapper;
 import com.chatop.api.service.DTO.apiRequest.UserRequestDTO;
 import com.chatop.api.service.DTO.apiResponse.UserResponseDTO;
+import com.chatop.api.service.repository.UserRepository;
 import com.chatop.api.service.security.UserDetailsImpl;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.chatop.api.business.entity.User;
-import com.chatop.api.service.repository.UserRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-import lombok.Data;
+import java.util.Date;
 
 @Data
 @Service

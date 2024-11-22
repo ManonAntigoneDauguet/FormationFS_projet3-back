@@ -7,7 +7,6 @@ import com.chatop.api.service.DTO.apiRequest.RentalPutRequestDTO;
 import com.chatop.api.service.DTO.apiResponse.ApiMessageResponse;
 import com.chatop.api.service.DTO.apiResponse.ApiRentalResponse;
 import com.chatop.api.service.DTO.apiResponse.RentalResponseDTO;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,13 +37,9 @@ public class RentalController {
      * @return rental
      */
     @GetMapping("/rentals/{id}")
-    public ResponseEntity<Object> getRentalById(@PathVariable("id") final Long id) {
-        try {
-            RentalResponseDTO rental = rentalService.getRentalById(id);
-            return ResponseEntity.ok(rental);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<RentalResponseDTO> getRentalById(@PathVariable("id") final Long id) {
+        RentalResponseDTO rental = rentalService.getRentalById(id);
+        return ResponseEntity.ok(rental);
     }
 
     /**
@@ -61,15 +56,10 @@ public class RentalController {
 
     @PutMapping("/rentals/{id}")
     public ResponseEntity<ApiMessageResponse> updateRental(@Valid @ModelAttribute RentalPutRequestDTO updatedData, @PathVariable("id") final Long id) {
-        try {
-            Rental oldRental = rentalService.findRentalById(id);
-            if (!rentalService.checkIfOwnRental(oldRental))
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiMessageResponse("You can only update your own rentals"));
-
-            rentalService.updateRental(oldRental, updatedData);
-            return ResponseEntity.ok(new ApiMessageResponse("Rental updated !"));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiMessageResponse(e.getMessage()));
-        }
+        Rental oldRental = rentalService.findRentalById(id);
+        if (!rentalService.checkIfOwnRental(oldRental))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiMessageResponse("You can only update your own rentals"));
+        rentalService.updateRental(oldRental, updatedData);
+        return ResponseEntity.ok(new ApiMessageResponse("Rental updated !"));
     }
 }
