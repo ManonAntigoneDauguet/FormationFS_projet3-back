@@ -1,8 +1,8 @@
 package com.chatop.api.business.mapper;
 
 import com.chatop.api.business.entity.User;
-import com.chatop.api.service.DTO.apiRequest.UserRequestDTO;
-import com.chatop.api.service.DTO.apiResponse.UserResponseDTO;
+import com.chatop.api.common.DTO.apiRequest.UserRequestDTO;
+import com.chatop.api.common.DTO.apiResponse.UserResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component

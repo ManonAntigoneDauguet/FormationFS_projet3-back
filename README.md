@@ -10,9 +10,8 @@ Feel free to check out the [documentation of the API :
 
 1. [Dependencies](#dependencies)
 2. [How to install and run the project](#how-to-install-and-run-the-project)
-3. [Architecture of the application](#architecture-of-the-application)
-4. [Access to uploaded pictures](#access-to-uploaded-pictures)
-5. [About database](#about-database)
+3. [Access to uploaded pictures](#access-to-uploaded-pictures)
+4. [About database](#about-database)
 
 ## Dependencies
 
@@ -34,24 +33,6 @@ When the server is launching, you can consult the documentation of the API with 
 Note : by default the JWT token expiration time is set on 1 day. You can change this setting in the `application.properties` file with the `chatop.app.jwtExpirationMs` property.
 
 You can run with `java -DDATABASE_USERNAME= youruser-DDATABASE_PASSWORD=yourpassword -DKEY=hjxgsqhdshdfgdsfkdsjhfgdkjsgfkj chatop.jar`.
-
-## Architecture of the application
-
-The project follows a layered architecture.
-
-1. `common`  
-   - Contains the Utils file with common methods used throughout the application
-2. `business`  
-   - `entity`: Includes the business object classes corresponding to the database entities.
-   - `mapper`: Contains mappers for converting between entities and DTOs.
-   - `service`: Holds the services associated with each API route.
-3. `service`  
-   - `configuration`: Contains global configuration files such as GlobalExceptionHandler and SpringSecurityConfiguration.
-   - `controller`: Includes controllers associated with each API route.
-   - `DTO`: Contains API request and response object classes.
-   - `exception`: Holds custom exception classes.
-   - `repository`: Includes repositories for interacting with the database.
-   - `security`: Contains classes for token creation, authentication filters, and implementations like UserDetailsImpl.
 
 ## Access to uploaded pictures
 
