@@ -1,8 +1,8 @@
 package com.chatop.api.business.mapper;
 
 import com.chatop.api.business.entity.Rental;
-import com.chatop.api.service.DTO.apiRequest.RentalPostRequestDTO;
-import com.chatop.api.service.DTO.apiResponse.RentalResponseDTO;
+import com.chatop.api.common.DTO.apiRequest.RentalPostRequestDTO;
+import com.chatop.api.common.DTO.apiResponse.RentalResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
