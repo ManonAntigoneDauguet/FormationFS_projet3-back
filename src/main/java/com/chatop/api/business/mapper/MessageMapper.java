@@ -1,6 +1,6 @@
 package com.chatop.api.business.mapper;
 
-import com.chatop.api.service.DTO.MessageDTO;
+import com.chatop.api.common.DTO.MessageDTO;
 import com.chatop.api.business.entity.Message;
 import org.springframework.stereotype.Component;
 

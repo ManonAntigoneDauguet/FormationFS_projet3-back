@@ -1,6 +1,6 @@
 package com.chatop.api.common;
 
-import com.chatop.api.service.exception.PictureUploadException;
+import com.chatop.api.common.exception.PictureUploadException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
